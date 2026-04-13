@@ -27,25 +27,31 @@ def verify_msg(hashed_msg, decrypted_hash):
     else:
         print("Message integrity verification failed: The original message may have been tampered with.")
 #--------------------User_Database-----------------
-user_list = {"user": {"password": "password123", "role": "user"}}
+user_list = {"user": {"password": "password123", "role": "user"}, "admin": {"password": "adminpass123", "role": "admin"}}
 #--------------------Program-Code------------------
 print("Welcome to the Secure Data Transmission App!")
+print("Please log in to continue.")
+login = 0
+while login == 0:
+    username = input("Username:\n")
+    password = input("Password:\n")
+    if username in user_list and user_list[username]["password"] == password:
+        print(f"Login successful! Welcome, {username}.")
+        login += 1
+    else:
+        print("Invalid username or password. Please try again.")
 print("This program will take a user message, hash it using SHA-256, encrypt the hash for secure transmission and finally decrypt and verify the message (hash comparison).")
 user_msg = input("Please enter a message to transmit securely:\n")
 hashed_msg = hash_msg(user_msg)                                  #Hashes the user message using SHA-256
 key, crypto_key = symmetric_key()                                #Generates a symmetric key for encryption and decryption
 encrypted_msg = encrypt_msg(hashed_msg, key, crypto_key)         #Encrypts the hashed message using the generated symmetric key
 decrypted_hash = decrypt_msg(encrypted_msg, key, crypto_key)     #Decrypts the encrypted hash using the same symmetric key
+print("Your message has been securely transmitted and decrypted. Now verifying message integrity...")
 verify_msg(hashed_msg, decrypted_hash)                           #Compares the original hash with the decrypted hash to verify message integrity
 #-------------------Test-Output------------------------
 print("--- Test Output ---")
-print(f"Original Message: {user_msg}")
+print(f"Original Message: {user_msg}") 
 print(f"Hashed Message: {hashed_msg}")
 print(f"Encrypted Hash: {encrypted_msg}")
 print(f"Encryption Key: {key}")
 print(f"Decrypted Hash Message: {decrypted_hash}")
-
-#Login authentication of the user needed
-#Final working neat version of the program deliverable
-#Completion of the README file
-#Video demonstration of the program working
