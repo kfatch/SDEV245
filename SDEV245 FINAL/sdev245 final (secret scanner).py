@@ -14,6 +14,7 @@ def file_scan(file_path, patterns):
     compiled_patterns = [re.compile(p) for p in patterns]
     try:
         with open(file_path, "r") as f:
+            content = f.read()
             for line_num, line in enumerate(f, 1):
                 for pat in compiled_patterns:
                     if pat.search(line):
@@ -28,15 +29,16 @@ def file_scan(file_path, patterns):
     return secrets
 
 #-------------Lists-------------------
-pattern_list = {"Instagram Username": r"(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:.(?!.))){0,28}(?:[A-Za-z0-9_]))?)",
-                "Instagram Hashtag": r"(?:#)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:.(?!.))){0,28}(?:[A-Za-z0-9_]))?)",
-                "Google API": r"AIza[0-9A-Za-z-_]{35}",
-                "Github PAT": r"^ghp_[a-zA-Z0-9]{36}$",
-                "Github Refresh Token": r"^ghr_[a-zA-Z0-9]{36}$"}
+pattern_list = [r"^(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:.(?!.))){0,28}(?:[A-Za-z0-9_]))?)",
+                r"^(?:#)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:.(?!.))){0,28}(?:[A-Za-z0-9_]))?)",
+                r"AIza[0-9A-Za-z-_]{35}",
+                r"^ghp_[a-zA-Z0-9]{36}$",
+                r"^ghr_[a-zA-Z0-9]{36}$",
+                ]
 
 #----------Main-Program-------------
 print("Starting Secret Scanner...")
-file_path = r"C:\Users\knfat\OneDrive\Desktop\SchoolResources\Security_and_Secure_Coding\SDEV245 FINAL\sdev245_final_secrets.txt"
+file_path = input("Enter the file path to be scanned:\n")
 results = file_scan(file_path, pattern_list)
 if results == []:
     print("No secrets found.")
