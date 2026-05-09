@@ -1,0 +1,4 @@
+Kody Fatch
+SDEV245 Final
+
+The program takes a file path as input. It then opens the file in question and reads each line. It looks for the values of the 'patterns' dictionary. It iterates the file using a for loop. If the pattern is found, it appends it to the 'secrets' dictionary. After the functions is finished, it returns the 'secrets' dictionary. The program checks if the file path exists and if it does it executes the if statement. The 'file_scan()' functions is called and assigned to the 'results' variable. If any secrets are found, they should be included in the dictionary that will be the output from the script.
